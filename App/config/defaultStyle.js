@@ -11,7 +11,11 @@ export default {
     backgroundColor: colors.primary,
     margin: 15,
     justifyContent: 'center',
-
     overflow: 'hidden',
+  },
+  defaultContainerStyle: {
+    flex: 1,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
   },
 };

@@ -8,7 +8,7 @@ import LogoComponent from '../../component/LogoComponent';
 
 function WelcomeScreen({navigation}) {
   function handleCreateAccountNavigation() {
-    return console.log('WOrking');
+    return navigation.navigate('CreateAccount');
   }
 
   function handleLogInNavigation() {

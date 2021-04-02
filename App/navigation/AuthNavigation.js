@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,11 @@ function AuthNavigation() {
           headerShown: false,
           animationEnabled: true,
         }}
+      />
+      <Stack.Screen
+        name="CreateAccount"
+        component={RegisterScreen}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
