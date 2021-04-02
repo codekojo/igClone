@@ -11,5 +11,7 @@ export default {
     backgroundColor: colors.primary,
     margin: 15,
     justifyContent: 'center',
+
+    overflow: 'hidden',
   },
 };

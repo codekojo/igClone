@@ -5,7 +5,7 @@ import colors from '../config/colors';
 
 function AppButton({
   title,
-  onPress,
+  onPressed,
   textColor = 'primary',
   bgButtonColor = 'primary',
 }) {
@@ -13,7 +13,7 @@ function AppButton({
     <TouchableHighlight
       activeOpacity={0.8}
       underlayColor="white"
-      onPress={() => console.log('Bow')}>
+      onPress={onPressed ? onPressed : () => console.log('Yyyyy')}>
       <View
         style={[styles.container, {backgroundColor: colors[bgButtonColor]}]}>
         <Text style={[styles.textStyle, {color: colors[textColor]}]}>

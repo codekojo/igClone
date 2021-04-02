@@ -1,27 +1,35 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, View, TouchableWithoutFeedback, Text} from 'react-native';
 
 import Screen from '../../common/Screen';
 import AppButton from '../../component/AppButton';
 import defaultStyle from '../../config/defaultStyle';
+import LogoComponent from '../../component/LogoComponent';
 
-function WelcomeScreen() {
+function WelcomeScreen({navigation}) {
+  function handleCreateAccountNavigation() {
+    return console.log('WOrking');
+  }
+
+  function handleLogInNavigation() {
+    return navigation.navigate('LoginPage');
+  }
+
   return (
     <Screen>
       <View style={defaultStyle.container}>
-        <Image
-          resizeMode="contain"
-          style={defaultStyle.imageLogoStyle}
-          source={require('../../assets/images/ig_image.png')}
-        />
+        <LogoComponent />
         <AppButton
           bgButtonColor="primaryButtonColor"
           title="create new account"
+          onPressed={handleCreateAccountNavigation}
         />
+
         <AppButton
           bgButtonColor="primary"
           textColor="secondary"
           title="Log in"
+          onPressed={handleLogInNavigation}
         />
       </View>
     </Screen>
