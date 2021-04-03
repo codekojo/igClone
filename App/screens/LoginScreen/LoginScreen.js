@@ -17,6 +17,7 @@ import colors from '../../config/colors';
 import AppButton from '../../component/AppButton';
 import Separator from '../../component/Separator';
 import Tagline from '../../component/Tagline';
+import KeyboardAvoidViewContainer from '../../common/KeyboardAvoidViewContainer';
 
 function LoginScreen() {
   const [passwordHidden, setPasswordHidden] = useState(true);
@@ -60,52 +61,48 @@ function LoginScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container} scrollEnabled="true">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}>
-        <View style={defaultStyle.container}>
-          <LogoComponent />
-          <TextInputComponent
-            placeholder="Phone number, email address or username"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            onChangeText={handleEmailChange}
-            valeu={email}
-          />
-          <TextInputComponent
-            placeholder="Password"
-            icon={EyesIcon}
-            secureTextEntry={passwordHidden}
-            onChangeText={handlePasswordChange}
-            value={password}
-          />
-          <AppButton
-            title="Log In"
-            bgButtonColor="primaryButtonColor"
-            textColor="primary"
-            disabled={!isEnabled}
-          />
-          <Tagline
-            description="Forgotten your login details?"
-            action="Get help with logging in."
-          />
-
-          <Separator title="OR" />
-          <AppButton
-            title="Log In With Facebook"
-            icon={facebookIcon}
-            bgButtonColor="primary"
-            textColor="iconColor"
-          />
-        </View>
-        <Tagline
-          description="Don't have an account?"
-          action="Sign up."
-          styled={styles.styled}
+    <KeyboardAvoidViewContainer>
+      <View style={defaultStyle.container}>
+        <LogoComponent />
+        <TextInputComponent
+          placeholder="Phone number, email address or username"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={handleEmailChange}
+          valeu={email}
         />
-      </KeyboardAvoidingView>
-    </ScrollView>
+        <TextInputComponent
+          placeholder="Password"
+          icon={EyesIcon}
+          secureTextEntry={passwordHidden}
+          onChangeText={handlePasswordChange}
+          value={password}
+        />
+        <AppButton
+          title="Log In"
+          bgButtonColor="primaryButtonColor"
+          textColor="primary"
+          disabled={!isEnabled}
+        />
+        <Tagline
+          description="Forgotten your login details?"
+          action="Get help with logging in."
+        />
+
+        <Separator title="OR" />
+        <AppButton
+          title="Log In With Facebook"
+          icon={facebookIcon}
+          bgButtonColor="primary"
+          textColor="iconColor"
+        />
+      </View>
+      <Tagline
+        description="Don't have an account?"
+        action="Sign up."
+        styled={styles.styled}
+      />
+    </KeyboardAvoidViewContainer>
   );
 }
 

@@ -1,17 +1,33 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import Screen from '../../common/Screen';
 import defaultStyle from '../../config/defaultStyle';
 import LogoComponent from '../../component/LogoComponent';
+import TextInputComponent from '../../component/TextInputComponent';
+import KeyboardAvoidViewContainer from '../../common/KeyboardAvoidViewContainer';
 
 function RegisterScreen() {
   return (
-    <Screen>
-      <View style={defaultStyle.defaultContainerStyle}>
+    <KeyboardAvoidViewContainer>
+      <View style={defaultStyle.container}>
         <LogoComponent />
+        <TextInputComponent
+          autoCapitalize="none"
+          placeholder="Email"
+          keyboardType="email-address"
+        />
+        <TextInputComponent
+          autoCapitalize="none"
+          keyboardType="default"
+          placeholder="Password"
+        />
+        <TextInputComponent
+          autoCapitalize="none"
+          keyboardType="default"
+          placeholder="Confirm Password"
+        />
       </View>
-    </Screen>
+    </KeyboardAvoidViewContainer>
   );
 }
 
