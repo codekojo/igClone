@@ -1,4 +1,5 @@
 import colors from '../../config/colors';
+import {Platform, StatusBar} from 'react-native';
 
 export default {
   imageLogoStyle: {
@@ -17,5 +18,8 @@ export default {
     flex: 1,
     backgroundColor: colors.primary,
     justifyContent: 'center',
+  },
+  safeArea: {
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : null,
   },
 };

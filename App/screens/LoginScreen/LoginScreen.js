@@ -1,14 +1,9 @@
-import React, {useState} from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from 'react-native';
+import React, {useState, createContext, useContext} from 'react';
+import {View, StyleSheet, TouchableWithoutFeedback, Text} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Yup from 'yup';
+import {Formik} from 'formik';
 
 import defaultStyle from '../../config/defaultStyle';
 import LogoComponent from '../../component/LogoComponent';
@@ -19,15 +14,18 @@ import Separator from '../../component/Separator';
 import Tagline from '../../component/Tagline';
 import KeyboardAvoidViewContainer from '../../common/KeyboardAvoidViewContainer';
 
-function LoginScreen() {
+const validateLogin = Yup.object().shape({
+  email: Yup.string()
+    .email('Please provide a valid email')
+    .required('Email is required')
+    .label('Please provide a valid email'),
+  password: Yup.string().required('No password provided.'),
+});
+
+function LoginScreen(props) {
+  console.log(props);
   const [passwordHidden, setPasswordHidden] = useState(true);
-  const [btnDisabled, setBtnDisabled] = useState(true);
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-
-  const isEnabled = email.length > 0 && password.length > 0;
-
-  console.log('www', isEnabled);
+  //const {signIn} = useContext();
 
   const showPassword = (
     <IonIcon name="eye-outline" size={24} color={colors.primaryButtonColor} />
@@ -41,16 +39,8 @@ function LoginScreen() {
     <MaterialIcon name="facebook" size={30} color={colors.iconColor} />
   );
 
-  function handlePasswordChange(e) {
-    let userPassword = e.trim().split(' ').join();
-    setPassword(userPassword);
-    setBtnDisabled(isEnabled);
-  }
-
-  function handleEmailChange(e) {
-    let userEmail = e.trim();
-    setEmail(userEmail);
-    setBtnDisabled(isEnabled);
+  function handleLogin() {
+    signIn({username, password});
   }
 
   const EyesIcon = (
@@ -62,46 +52,76 @@ function LoginScreen() {
 
   return (
     <KeyboardAvoidViewContainer>
-      <View style={defaultStyle.container}>
-        <LogoComponent />
-        <TextInputComponent
-          placeholder="Phone number, email address or username"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onChangeText={handleEmailChange}
-          valeu={email}
-        />
-        <TextInputComponent
-          placeholder="Password"
-          icon={EyesIcon}
-          secureTextEntry={passwordHidden}
-          onChangeText={handlePasswordChange}
-          value={password}
-        />
-        <AppButton
-          title="Log In"
-          bgButtonColor="primaryButtonColor"
-          textColor="primary"
-          disabled={!isEnabled}
-        />
-        <Tagline
-          description="Forgotten your login details?"
-          action="Get help with logging in."
-        />
+      <Formik
+        initialValues={{email: '', password: ''}}
+        validationSchema={validateLogin}
+        onSubmit={handleLogin}>
+        {({
+          handleChange,
+          handleSubmit,
+          values,
+          setFieldTouched,
+          touched,
+          errors,
+        }) => (
+          <>
+            <View style={defaultStyle.container}>
+              <LogoComponent />
+              <TextInputComponent
+                placeholder="Phone number, email address or username"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onBlur={() => setFieldTouched('email')}
+                onChangeText={handleChange('email')}
+                value={values.email}
+              />
+              <View>
+                {touched.email && (
+                  <Text style={{color: 'red'}}>{errors.email} </Text>
+                )}
+              </View>
+              <TextInputComponent
+                placeholder="Password"
+                icon={EyesIcon}
+                secureTextEntry={passwordHidden}
+                onChangeText={handleChange('password')}
+                value={values.password}
+              />
+              <View>
+                {touched.password && (
+                  <Text style={{color: 'red'}}>{errors.password} </Text>
+                )}
+              </View>
+              <AppButton
+                title="Log In"
+                bgButtonColor="primaryButtonColor"
+                textColor="primary"
+                onPressed={handleSubmit}
+                disabled={
+                  !(values.email.length !== 0 && values.password.length !== 0)
+                }
+              />
+              <Tagline
+                description="Forgotten your login details?"
+                action="Get help with logging in."
+              />
 
-        <Separator title="OR" />
-        <AppButton
-          title="Log In With Facebook"
-          icon={facebookIcon}
-          bgButtonColor="primary"
-          textColor="iconColor"
-        />
-      </View>
-      <Tagline
-        description="Don't have an account?"
-        action="Sign up."
-        styled={styles.styled}
-      />
+              <Separator title="OR" />
+              <AppButton
+                title="Log In With Facebook"
+                icon={facebookIcon}
+                bgButtonColor="primary"
+                textColor="iconColor"
+              />
+            </View>
+            <Tagline
+              description="Don't have an account?"
+              action="Sign up."
+              styled={styles.styled}
+            />
+          </>
+        )}
+      </Formik>
     </KeyboardAvoidViewContainer>
   );
 }

@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 function AuthNavigation() {
   return (
-    <Stack.Navigator initialRouteName="WelcomePage">
+    <Stack.Navigator initialRouteName="AccountInfo">
       <Stack.Screen
         name="WelcomePage"
         component={WelcomeScreen}

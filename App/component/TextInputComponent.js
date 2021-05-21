@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View, StyleSheet} from 'react-native';
+import {TextInput, View, StyleSheet, firstIcon} from 'react-native';
 
 function TextInputComponent({icon, ...rest}) {
   const iconAvailable = {
@@ -8,6 +8,7 @@ function TextInputComponent({icon, ...rest}) {
 
   return (
     <View style={[styles.container, styles.input]}>
+      {firstIcon && firstIcon}
       <TextInput style={[styles.inputTextStyle, iconAvailable]} {...rest} />
       {icon && icon}
     </View>
